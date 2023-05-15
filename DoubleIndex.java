@@ -1,74 +1,47 @@
 package sorting;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class DoubleIndex {
-	
+
 	public static int segregate(ArrayList<Integer> nums, int num) {
-		
-		ArrayList<Integer> array = nums;
-		
-		Integer number = num;
-		
-		int position = 0;
-		
-		Iterator<Integer> it = array.listIterator();
-		
-		//array se for par
-		if(array.size() % 2 == 0) {
-			
-			// divide o array
-			position = array.size()/2;
 
-			//move o iterator ate position
-			for (int i = 0; i < position -1; i++) {
-				it.next();
-			}
-
-			if(array.get(position) == number) {
-				
-				// se for o numero certo
-				return position;
-
-			} else {
-
-				// se o numero da posicao atual for maior que o numero
-				if( array.get(position) > number) {
-					// metade menor
-					position = position/2;
-				} 
-				// se o numero da posicao atual for menor que o numero
-				else if( array.get(position) < number ) {
-					// metade maior
-					position += position/2;
-				}
-
-				segregate(nums, number, position);
-				
-			}
-			
-		} else {
-			
-		}
-		
-		return 0;
+		return segregate(nums, num, nums.size(), 0);
 	}
+
 	
-	public static int segregate(ArrayList<Integer> nums, int num, int position) {
-		
+	// método depois da primeira tentativa
+	public static int segregate(ArrayList<Integer> nums, int num, int fim, int inicio) {
+
+
 		ArrayList<Integer> array = nums;
+
 		Integer number = num;
+
+		int end = fim, start = inicio;
+		int position = (start + end)/2;
 		
-		if(array.size() % 2 == 0) {
-			
-			
-			
-		} else {
-			
+		//Condição de não achar o numero
+		if(start > end) {
+			return -1;
 		}
 		
-		
-		return 0;
+		if(array.get(position) == number) {
+			// se for o numero certo
+			return position;
+
+		}
+
+		// Procura na metado menor
+		if( array.get(position) > number) {
+
+			return segregate(nums, number, position - 1, start);
+		} 
+		// se o numero da posicao atual for menor que o numero
+		else {
+
+			return segregate(nums, number, end, position + 1);
+		}
+		// recursividade
 	}
 }
